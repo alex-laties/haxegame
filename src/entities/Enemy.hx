@@ -3,6 +3,8 @@ package entities;
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 
+import scenes.GameScene;
+
 class Enemy extends Entity {
     public function new(x:Float, y:Float) {
         super(x, y);
@@ -14,6 +16,10 @@ class Enemy extends Entity {
     public override function moveCollideX(e:Entity) {
         scene.remove(e);
         scene.remove(this);
+        if (e.type == "player") {
+            cast(scene, GameScene).gameOver = true;
+        }
+            
         return true;
     }
 
