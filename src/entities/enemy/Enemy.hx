@@ -1,9 +1,10 @@
-package entities;
+package entities.enemy;
 
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 
-import scenes.GameScene;
+import event.EventManager;
+
 
 class Enemy extends Entity {
     public function new(x:Float, y:Float) {
@@ -17,14 +18,17 @@ class Enemy extends Entity {
         scene.remove(e);
         scene.remove(this);
         if (e.type == "player") {
-            cast(scene, GameScene).gameOver = true;
+            EventManager.pushEvent("playerHit");
         }
-            
         return true;
     }
 
     public override function update() {
         moveBy(-5, 0, "player");
+        if (x < 0) {
+            scene.remove(this);
+            EventManager.pushEvent("enemyRemoved");
+        }
         super.update();
     }
 }

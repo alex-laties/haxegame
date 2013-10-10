@@ -3,6 +3,7 @@ package scenes;
 import com.haxepunk.HXP;
 import com.haxepunk.Scene;
 
+import entities.enemy.EnemySpawner;
 import entities.Player;
 import entities.TimerText;
 import entities.ScoreText;
@@ -12,6 +13,7 @@ import event.EventManager;
 class GameScene extends Scene {
     private var score:ScoreText;
     private var spawnTimer:Float;
+    private var spawner:EnemySpawner;
     public var gameOver:Bool;
 
     public function new() {
@@ -24,6 +26,12 @@ class GameScene extends Scene {
         add(new TimerText("Start", 0, 0));
         score = new ScoreText(HXP.halfWidth, 0);
         add(score);
+
+        spawner = new EnemySpawner();
+
+        EventManager.onEvent("playerHit", function() {
+            gameOver = true;
+        });
 
         spawn();
     }
@@ -39,16 +47,16 @@ class GameScene extends Scene {
         if (gameOver) {
             reset();
         }
-        spawnTimer -= HXP.elapsed;
-        if (spawnTimer < 0) {
-            spawn();
+
+        if (spawner.timeToSpawn()) {
+            add(spawner.spawn());
         }
         super.update();
     }
 
     private function spawn() {
         var y = Math.random() * HXP.height;
-        add(new entities.Enemy(HXP.width, y));
+        add(new entities.enemy.Enemy(HXP.width, y));
         spawnTimer = 1;
     }
 }
