@@ -3,6 +3,7 @@ package entities;
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import scenes.GameScene;
+import event.EventManager;
 
 class Bullet extends Entity {
     public function new(x:Float, y:Float) {
@@ -15,7 +16,7 @@ class Bullet extends Entity {
     public override function moveCollideX(e:Entity) {
         scene.remove(e);
         scene.remove(this);
-        cast(scene, GameScene).addToScore(1);
+        EventManager.pushEvent("score");
         return true;
     }
 

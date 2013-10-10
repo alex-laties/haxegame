@@ -7,7 +7,13 @@ import entities.Player;
 import entities.TimerText;
 import entities.ScoreText;
 
+import event.EventManager;
+
 class GameScene extends Scene {
+    private var score:ScoreText;
+    private var spawnTimer:Float;
+    public var gameOver:Bool;
+
     public function new() {
         super();
     }
@@ -24,10 +30,12 @@ class GameScene extends Scene {
 
     public function reset() {
         removeAll();
+        EventManager.reset();
         begin();
     }
 
     public override function update() {
+        EventManager.update();
         if (gameOver) {
             reset();
         }
@@ -43,12 +51,4 @@ class GameScene extends Scene {
         add(new entities.Enemy(HXP.width, y));
         spawnTimer = 1;
     }
-
-    public function addToScore(amount:Int) {
-        score.increment(amount);
-    }
-
-    private var score:ScoreText;
-    private var spawnTimer:Float;
-    public var gameOver:Bool;
 }
