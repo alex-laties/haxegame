@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
-	<meta title="TestGame" package="com.example.app" version="1.0.0" company="" />
+	<meta title="HaxeBullet" package="com.haxebullet.app" version="0.0.1" company="Punchbyte Studios" />
 
  	<app file="Main" main="Main" path="bin" />
 
