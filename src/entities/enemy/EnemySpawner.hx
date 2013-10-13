@@ -2,7 +2,6 @@ package entities.enemy;
 
 import com.haxepunk.HXP;
 
-import entities.enemy.Enemy;
 import event.EventManager;
 
 import haxe.Timer;
@@ -39,14 +38,12 @@ class EnemySpawner {
         }
         return false;
     }
-            
-
 
     public function spawn() {
         spawned += 1;
         radian += 0.15;
         var y = Math.sin(radian) * HXP.height;
-        return new Enemy(HXP.width, Math.abs(y));
+        return new entities.enemy.PatternEnemy(HXP.width, Math.abs(y));
     }
 
 
