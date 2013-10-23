@@ -4,6 +4,7 @@ import com.haxepunk.HXP;
 import com.haxepunk.graphics.Image;
 
 import event.EventManager;
+import scenes.GameScene;
 
 typedef Vector2 = {
     var x : Float;
@@ -12,7 +13,6 @@ typedef Vector2 = {
 
 class PatternEnemy extends BaseEnemy {
     private var goingLeft : Bool;
-
 
     public function new(x:Float, y:Float) {
         super(x, y);
@@ -28,6 +28,7 @@ class PatternEnemy extends BaseEnemy {
         distX = Math.abs(x - HXP.width / 2) / 8;
         if (goingLeft && x < (HXP.width/2 + 10)) {
             goingLeft = false;
+            fireAtPlayer();
         }
 
         if (goingLeft) {
@@ -35,6 +36,11 @@ class PatternEnemy extends BaseEnemy {
         }
         var dist : Vector2 = { x: distX, y: distY};
         return dist;
+    }
+
+    public function fireAtPlayer() {
+        var player = cast(scene, GameScene).getPlayer();
+        scene.add(new EnemyBullet(x-16, y-4, player.x, player.y)); 
     }
 
     public override function update() {
