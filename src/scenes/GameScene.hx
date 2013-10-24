@@ -35,8 +35,6 @@ class GameScene extends Scene {
         EventManager.onEvent("playerHit", function() {
             gameOver = true;
         });
-
-        spawn();
     }
 
     public function reset() {
@@ -55,12 +53,6 @@ class GameScene extends Scene {
             add(spawner.spawn());
         }
         super.update();
-    }
-
-    private function spawn() {
-        var y = Math.random() * HXP.height;
-        add(new entities.enemy.Enemy(HXP.width, y));
-        spawnTimer = 1;
     }
 
     public function getPlayer() {
