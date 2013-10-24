@@ -2,12 +2,17 @@ package entities.enemy;
 
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
+import com.haxepunk.HXP;
 import scenes.GameScene;
 import event.EventManager;
 
 class EnemyBullet extends Entity {
+    private static var speed : Float = 6;
     private var _tarX : Float;
     private var _tarY : Float;
+
+    private var _vecX : Float;
+    private var _vecY : Float;
 
     public function new(x:Float, y:Float, tarX:Float, tarY:Float) {
         super(x, y);
@@ -17,6 +22,14 @@ class EnemyBullet extends Entity {
 
         _tarX = tarX;
         _tarY = tarY;
+
+        var diffX = _tarX - x;
+        var diffY = _tarY - y;
+
+        var vec = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
+
+        _vecX = diffX / vec;
+        _vecY = diffY / vec;
     }
 
     public override function moveCollideX(e:Entity) {
@@ -39,10 +52,17 @@ class EnemyBullet extends Entity {
         return true;
     }
 
-    public override function update() {
-        moveTowards(_tarX, _tarY, 6, "player");
+    public function outOfBounds() {
+        if (x <= 0 || x >= HXP.width || y <= 0 || y >= HXP.height) {
+            return true;
+        }
+        return false;
+    }
 
-        if (x <= _tarX && y <= _tarY){
+    public override function update() {
+        moveBy(_vecX*speed, _vecY*speed, "player");
+
+        if (outOfBounds()){
             scene.remove(this);
         }
         super.update();
