@@ -13,7 +13,6 @@ import event.EventManager;
 
 class GameScene extends Scene {
     private var player:Entity;
-    private var score:ScoreText;
     private var spawnTimer:Float;
     private var spawner:EnemySpawner;
     public var gameOver:Bool;
@@ -26,9 +25,7 @@ class GameScene extends Scene {
         gameOver = false;
         player = new entities.Ship(16, HXP.halfHeight);
         add(player);
-        add(new TimerText("Start", 0, 0));
-        score = new ScoreText(HXP.halfWidth, 0);
-        add(score);
+        add(new TimerText("Start", HXP.halfWidth, 0));
 
         spawner = new EnemySpawner();
 

@@ -4,25 +4,31 @@ import com.haxepunk.Entity;
 import com.haxepunk.graphics.Text;
 
 class TimerText extends Entity {
+    private var startTimestamp:Float;
+    private var currentTimestamp:Float;
+    private var lastDuration:Int;
+
     public function new(text:String, x:Float, y:Float) {
         super(x, y);
         graphic = new Text(text);
-        start_timestamp = 0;
-        current_timestamp = 0;
+        startTimestamp = 0;
+        currentTimestamp = 0;
+        lastDuration = -1;
         type = "hud";
     }
 
     public override function update() {
-        if (start_timestamp == 0) {
-            start_timestamp = haxe.Timer.stamp();
+        if (startTimestamp == 0) {
+            startTimestamp = haxe.Timer.stamp();
         }
 
-        current_timestamp = haxe.Timer.stamp();
+        currentTimestamp = haxe.Timer.stamp();
 
-        var duration = current_timestamp - start_timestamp;
-        cast(graphic, Text).text = Std.string(duration);
+        var duration = Std.int(currentTimestamp - startTimestamp);
+
+        if (duration > lastDuration) {
+            cast(graphic, Text).text = 'Survived: $duration';
+            lastDuration = duration;
+        }
     }
-
-    private var start_timestamp:Float;
-    private var current_timestamp:Float;
 }
