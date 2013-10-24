@@ -71,6 +71,23 @@ class Ship extends Entity {
         _velY += _accelY * speed;
         _velX = normalizeVelocity(_velX);
         _velY = normalizeVelocity(_velY);
+
+        var newX = x + _velX;
+        var newY = y + _velY;
+
+        if (newX <= 0) {
+            _velX -= newX;
+        }
+        else if (newX >= (HXP.width - width)) {
+            _velX = HXP.width - width - x;
+        }
+
+        if (newY <= 0) {
+            _velY -= newY;
+        }
+        else if (newY >= (HXP.height - height)) {
+            _velY = HXP.height - height - y;
+        }
     }
 
     public override function update() {
