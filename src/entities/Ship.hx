@@ -33,7 +33,7 @@ class Ship extends Entity {
         type = "player";
     }
 
-    private function handleInput() {
+    private inline function handleInput() {
         _accelX = 0;
         _accelY = 0;
         //not chained as if-else to allow multiple key presses
@@ -50,8 +50,11 @@ class Ship extends Entity {
             _accelX += 1;
         }
     }
-
-    private function normalizeVelocity(vel:Float) {
+    
+    private inline function normalizeVelocity(vel:Float) {
+    /**
+      caps velocity and adds drag
+    */
         if (Math.abs(vel) > maxVelocity) {
             vel = maxVelocity * HXP.sign(vel);
         }
@@ -66,7 +69,7 @@ class Ship extends Entity {
         return vel;
     }
 
-    private function move() {
+    private inline function move() {
         _velX += _accelX * speed;
         _velY += _accelY * speed;
         _velX = normalizeVelocity(_velX);
@@ -96,6 +99,4 @@ class Ship extends Entity {
         moveBy(_velX, _velY);
         super.update();
     }
-
 }
-        
