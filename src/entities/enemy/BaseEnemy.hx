@@ -1,6 +1,7 @@
 package entities.enemy;
 
 import com.haxepunk.Entity;
+import com.haxepunk.HXP;
 import event.EventManager;
 
 class BaseEnemy extends Entity {
@@ -16,5 +17,12 @@ class BaseEnemy extends Entity {
             EventManager.pushEvent("playerHit");
         }
         return true;
+    }
+
+    public function isOffScreen() {
+        if (x < 0 || x > HXP.width || y < 0 || y > HXP.height) {
+           return true;
+        }
+        return false; 
     }
 }

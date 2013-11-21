@@ -12,27 +12,27 @@ typedef Vector2 = {
 }
 
 class PatternEnemy extends BaseEnemy {
-    private var goingLeft : Bool;
+    private var goingDown : Bool;
 
     public function new(x:Float, y:Float) {
         super(x, y);
         graphic = Image.createRect(16, 32);
         setHitbox(16, 32);
-        goingLeft = true;
+        goingDown = true;
     }
 
     public function nextPosition() {
         var distY = 0.0;
         var distX = 0.0;
 
-        distX = Math.abs(x - HXP.width / 2) / 8;
-        if (goingLeft && x < (HXP.width/2 + 10)) {
-            goingLeft = false;
+        distY = Math.abs(y + HXP.height / 2) / 32;
+        if (goingDown && y > (HXP.height/2 + 10)) {
+            goingDown = false;
             fireAtPlayer();
         }
 
-        if (goingLeft) {
-            distX = -distX;
+        if (!goingDown) {
+            distY = -distY;
         }
         var dist : Vector2 = { x: distX, y: distY};
         return dist;
@@ -40,13 +40,13 @@ class PatternEnemy extends BaseEnemy {
 
     public function fireAtPlayer() {
         var player = cast(scene, GameScene).getPlayer();
-        scene.add(new EnemyBullet(x-16, y-4, player.x, player.y)); 
+        scene.add(new EnemyBullet(x+8, y+4, player.x, player.y)); 
     }
 
     public override function update() {
         var move = nextPosition();
         moveBy(move.x, move.y);
-        if (x < 0 || x > HXP.width) {
+        if (isOffScreen()) {
             scene.remove(this);
             EventManager.pushEvent("enemyRemoved");
         }

@@ -23,7 +23,7 @@ class GameScene extends Scene {
 
     public override function begin() {
         gameOver = false;
-        player = new entities.Ship(16, HXP.halfHeight);
+        player = new entities.Ship(HXP.halfWidth - 16, HXP.height);
         add(player);
         add(new TimerText("Start", HXP.halfWidth, 0));
 

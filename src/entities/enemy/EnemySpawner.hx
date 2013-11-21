@@ -42,8 +42,8 @@ class EnemySpawner {
     public function spawn() {
         spawned += 1;
         radian += 0.15;
-        var y = Math.sin(radian) * HXP.height;
-        return new entities.enemy.PatternEnemy(HXP.width, Math.abs(y));
+        var x = Math.sin(radian) * HXP.width;
+        return new entities.enemy.PatternEnemy(Math.abs(x), 10);
     }
 
 
